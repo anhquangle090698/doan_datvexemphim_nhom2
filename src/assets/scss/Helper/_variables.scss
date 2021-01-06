@@ -1,0 +1,58 @@
+//variable color
+$color-white-0 : #fff;
+$color-white-1 : #e5e5e5;
+$color-black-0 : #000;
+$color-black-1 : #222;
+$color-black-2 : #333;
+$color-gray-1 : #a5a5a5;
+$color-gray-2 : #d4d4d4;
+$color-gray-3 : #999;
+$color-orange-0 :  #ed733f;
+$color-orange-1 :  #ff6f3c;
+$color-orange-2 :  #ff5722;
+
+$color-blue-0 : #373a6d;
+$color-green-0 : #009975;
+
+//Variable font-size
+$fs-10 : 10px;
+$fs-12 : 12px;
+$fs-16 : 16px;
+$fs-20 : 20px;
+$fs-30 : 30px;
+$fs-35 : 35px;
+
+//Variable font-weight
+$fw-300 : 300; 
+$fw-400 : 400;
+$fw-700 : 700;
+$fw-bold : bold;
+
+//Variable margin 
+$mg-5 : 5px;
+$mg-10 : 10px;
+$mg-15 : 15px;
+$mg-20 : 20px;
+$mg-30 : 30px;
+
+//Variable padding
+
+$pd-5 : 5px;
+$pd-10 : 10px;
+$pd-15 : 15px;
+$pd-20 : 20px;
+$pd-30 : 30px;
+$pd-40 : 40px;
+$pd-45 : 45px;
+
+//Variable line-height
+$line-height : 1.5rem;
+
+//break points
+$breakpoints:(
+    'extra' : 1440px,
+    'extra-large': 1200px,
+    'large' : 992px,
+    'medium' : 768px,
+    'small' : 576px,
+)

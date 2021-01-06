@@ -1,0 +1,37 @@
+// 7 in 1, import all file in main.scss, only compile file main.scss
+
+//Start variable, next mixin -->
+//Helper
+
+@import "./Helper/variables";
+@import "./Helper/mixin";
+
+//Vendor
+//Only file .scss
+
+//Base
+@import "./Base/reset"; //global
+@import "./Base/customizes";
+@import "./Base/normalized";
+
+//Component
+@import "./Component/button";
+
+//Layouts
+@import "./Layout/header";
+@import "./Layout/carousel";
+@import "./Layout/popup";
+@import "./Layout/listmoives";
+@import "./Layout/movie";
+@import "./Layout/systemcinema";
+@import "./Layout/news";
+@import "./Layout/promotion";
+@import "./Layout/footer";
+@import "./Layout/scrolltop";
+@import "./Layout/detailfilm";
+@import "./Layout/topfilms";
+@import "./Layout/signinup";
+@import "./Layout/inputfield";
+@import "./Layout/loadingpage";
+@import "./Layout/detailinformationuser";
+@import "./Layout/InputFieldCustomEdit";

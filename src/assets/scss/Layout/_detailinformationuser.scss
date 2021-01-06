@@ -1,0 +1,49 @@
+.nav__content {
+    position: relative;
+    top: 0;
+    left: 0;
+
+    margin: 80px auto 0;
+    width: 65%;
+    padding: 70px 0;    
+    
+    height: 100%;
+
+    .information {
+
+        margin: $mg-30 0;
+
+        .form__edit {
+
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            width: 100%;
+
+            .form__button--block {
+                width: 60.5%;
+
+                display: flex;
+                justify-content: flex-end;
+
+                .button__edit {
+                    @include styleButton(transparent, 5px, $pd-10, $pd-15);
+
+                    outline: none;
+                    
+                    border: 1px solid $color-orange-1;
+                    color : $color-orange-1;
+
+                    transition: all .3s;
+
+                    &:hover {
+                        background-color: $color-orange-1;
+
+                        color: $color-white-0;
+                    }
+                }                
+            }
+        }
+    }
+}

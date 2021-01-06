@@ -1,0 +1,125 @@
+.form__group--edit {
+
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    margin: $mg-15 0;
+
+    width: 35%;
+    height: 80px;
+
+    .label--edit {
+        @include styleText($color-black-1, $fs-16 - 2, $fw-400);
+
+        margin-left: $mg-5;
+
+        .label--icon {
+            margin-right: $mg-5;
+        }
+    }   
+
+    .form__control--edit {
+
+        width: 100%;
+        max-width: 320px;
+
+        padding: $pd-10;
+
+        background: transparent;
+
+        outline: none;
+
+        border: 1px solid $color-gray-2;
+        border-radius: 5px;
+
+        font-size: $fs-12 + 2;
+
+        transition: all .3s ease;
+
+        &:focus {
+            border: 1px solid $color-gray-1;
+        }
+
+        &.invalid {
+            border: 1.5px solid #d72323;
+        }
+
+        &:disabled {
+            background-color: #dee1ec;
+
+            cursor: no-drop;
+        }
+    }
+
+    .form__error--edit {
+        @include styleText(#d72323, $fs-10 + 2, $fw-400);
+
+        position: relative;
+    }
+
+    .fa-info {
+
+        position: absolute;
+        top: 43px;
+        right: 31%;
+
+        color: #d72323;
+        font-size: $fs-10;
+
+        width: 20px;
+        height: 20px;
+        line-height: 18px;
+
+        text-align: center;
+
+        border: 1px solid #d72323;
+        border-radius: 50%;
+    }
+
+    .fa-eye {
+        position: absolute;
+        top: 43px;
+        right: 36%;
+
+        color: $color-black-1;
+        font-size: $fs-16 + 2;
+
+        text-align: center;
+
+        cursor: pointer;
+
+        z-index: 7;
+
+        &::after {
+            content: 'hiện mật khẩu';
+            position: absolute;
+            top: -40px;
+            right: -20px;
+            z-index: 1;
+
+            height: 45px;
+            width: 100px;
+
+            background-color: $color-blue-0;
+            color : $color-white-0;
+
+            visibility: hidden;
+            opacity: 0;
+
+            transition: all .3s ease-in-out;
+
+            clip-path: polygon(0% 0%, 100% 0%, 100% 60%, 75% 60%, 65% 85%, 50% 60%, 0% 60%);
+        }
+
+        &:hover::after {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        &:hover {
+            color : $color-blue-0;
+        }
+    }
+}

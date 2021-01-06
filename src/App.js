@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { lazy, Suspense } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import Authentication from "./Components/Authentication";
+
+
+const Home  = lazy(() => import('./Pages/ClientPages/Home'));
+const ShowingFilm = lazy(() => import('./Pages/ClientPages/ShowingFilm'));
+const DetailMovie = lazy(() => import('./Pages/ClientPages/DetailMovie'));
+const SignInUp = lazy(() => import('./Pages/ClientPages/SignInUp'));
+const TicketRoom = lazy(() => import('./Pages/ClientPages/TicketRoom'));
+const InformationUser = lazy(() => import('./Pages/ClientPages/CustomerInformation'));
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Suspense fallback={
+        <div>Loading 111</div>
+        // setTimeout(() => {
+          
+        // },1500)
+      }>
+      
+        <Switch>
+          <Route path="/" exact component={Home}></Route>
+          <Route path="/phim-dang-chieu" exact component={ShowingFilm}></Route>
+          <Route path="/lich-chieu-:tenPhim/:maPhim" exact component={DetailMovie}></Route>
+          <Route path="/dang-nhap" exact component={SignInUp}></Route>
+          <Route path='/thong-tin-ca-nhan' exact component={InformationUser}></Route>
+
+          <Authentication path="/chitietphongve/:maLichChieu" exact Component={TicketRoom}></Authentication>
+          <Authentication path="/chitietphongve/:maLichChieu" exact Component={SignInUp}></Authentication>
+
+          <Redirect to="/"></Redirect>
+        </Switch>
+      </Suspense>
+    </>
   );
 }
 

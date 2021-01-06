@@ -1,0 +1,110 @@
+.listMovies {
+    position: relative;
+    width: 100%;
+
+    padding: 80px 0 $pd-30;
+
+    .listMovies__top {
+        width: 65%;
+        margin: 0 auto;
+
+        .listMovies__top--title {
+            position: relative;
+
+            @include styleText($color-black-1, $fs-20, $fw-400);
+
+            transition: all .3s ease-in-out;
+            cursor: pointer;
+
+            &:hover {
+                color: $color-orange-1;
+            }
+
+            &:after {
+                content: '';
+
+                display: block;
+
+                width: 3px;
+                height: 100%;
+
+                position: absolute;
+                bottom: -1px;
+                left: -10px;
+
+                background-color: $color-orange-1;
+            }
+        }
+    }
+
+    .listMovies__body {
+        width: 65%;
+        margin: 0 auto;
+        height: 100%;
+
+        .row {
+            padding: $pd-20 70px;
+
+            .listMovies__showMore {
+                position: absolute;
+                bottom: 0;
+                right: 8%;
+
+                padding: $pd-10 $pd-15;
+
+                border: 1px solid $color-orange-1;
+                border-radius: 5px;
+
+                color: $color-orange-1;
+
+                i {
+                    -webkit-transform: translateZ(0);
+                    transform: translateZ(0);
+                }
+
+                &:hover i {
+                    -webkit-animation-name: hvr-icon-wobble-horizontal;
+                    animation-name: hvr-icon-wobble-horizontal;
+                    -webkit-animation-duration: 1s;
+                    animation-duration: 1s;
+                    -webkit-animation-timing-function: ease-in-out;
+                    animation-timing-function: ease-in-out;
+                    -webkit-animation-iteration-count: 1;
+                    animation-iteration-count: 1;
+                }
+            }
+        }
+    }
+}
+
+@keyframes hvr-icon-wobble-horizontal {
+    16.65% {
+        -webkit-transform: translateX(6px);
+        transform: translateX(6px);
+    }
+
+    33.3% {
+        -webkit-transform: translateX(-5px);
+        transform: translateX(-5px);
+    }
+
+    49.95% {
+        -webkit-transform: translateX(4px);
+        transform: translateX(4px);
+    }
+
+    66.6% {
+        -webkit-transform: translateX(-2px);
+        transform: translateX(-2px);
+    }
+
+    83.25% {
+        -webkit-transform: translateX(1px);
+        transform: translateX(1px);
+    }
+
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}

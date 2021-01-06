@@ -1,0 +1,122 @@
+.form__group {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 300px;
+    height: 70px;
+
+    .form__error {
+        @include styleText(#d72323, $fs-10 + 2, $fw-400);
+
+        position: relative;
+
+    }
+
+    .fa-info {
+
+        position: absolute;
+        top: 17px;
+        right: 0;
+
+        color: #d72323;
+        font-size: $fs-10 - 3 ;
+
+        width: 15px;
+        height: 15px;
+        line-height: 14px;
+
+        text-align: center;
+
+        border: 1px solid #d72323;
+        border-radius: 50%;
+    }
+
+    .fa-eye {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+
+        color: $color-black-1;
+        font-size: $fs-16;
+
+        text-align: center;
+
+        cursor: pointer;
+
+        z-index: 7;
+
+        &::after {
+            content: 'hiện mật khẩu';
+            position: absolute;
+            top: -40px;
+            right: -20px;
+            z-index: 1;
+
+            height: 45px;
+            width: 100px;
+
+            background-color: $color-blue-0;
+            color : $color-white-0;
+
+            visibility: hidden;
+            opacity: 0;
+
+            transition: all .3s ease-in-out;
+
+            clip-path: polygon(0% 0%, 100% 0%, 100% 60%, 75% 60%, 65% 85%, 50% 60%, 0% 60%);
+        }
+
+        &:hover::after {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        &:hover {
+            color : $color-blue-0;
+        }
+    }
+
+    .form__control {
+        @include styleText($color-black-2, $fs-12 + 2, $fw-400);
+        
+        width: 100%;
+        padding: $pd-10;
+
+        background: transparent;
+
+        border: none;
+        outline: none;
+
+        border-bottom: 1px solid $color-gray-2;
+
+        transition: all .3s ease;
+
+        &::placeholder {
+            @include styleText($color-gray-1, $fs-12 + 2, $fw-400);
+
+            letter-spacing: .5px;
+
+            transform: translateY(5px);
+            transition: transform .3s ease-in;
+        }
+        &:focus {
+
+            &::placeholder {
+                transform: translateY(-10px);
+
+                font-size: $fs-10 + 1;
+            }
+
+            border-bottom: 1px solid $color-gray-3;
+        }
+
+        &.invalid {
+            border-bottom: 1.5px solid #d72323;
+        }
+    }
+
+    
+}
