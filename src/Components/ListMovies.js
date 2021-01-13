@@ -28,24 +28,8 @@ export default function ListMovies(props) {
 
   let { listFilm } = useSelector(state => state.StateManageFilm);
 
-  const renderListFilm1 = () => {
-    return listFilm.slice(0,8).map((film, index) => {
-      return <div className="col-sm-6 col-md-3" key={index}>
-          <Movie phim = {film} ></Movie>
-      </div>
-    });
-  }
-
-  const renderListFilm2 = () => {
-    return listFilm.slice(8, 16).map((film, index) => {
-      return <div className="col-sm-6 col-md-3" key={index}>
-          <Movie phim = {film} ></Movie>
-      </div>
-    });
-  }
-
-  const renderListFilm3 = () => {
-    return listFilm.slice(16).map((film, index) => {
+  const renderListFilm = (startFilm, endFilm) => {
+    return listFilm.slice(startFilm, endFilm).map((film, index) => {
       return <div className="col-sm-6 col-md-3" key={index}>
           <Movie phim = {film} ></Movie>
       </div>
@@ -68,7 +52,7 @@ export default function ListMovies(props) {
           >
             <SwiperSlide>
                 <div className="row">
-                    {renderListFilm1()}
+                    {renderListFilm(0,8)}
                     <NavLink to="/phim-dang-chieu" className="listMovies__showMore">
                       Xem Thêm <i className="fa fa-angle-double-right"></i>
                     </NavLink>
@@ -76,7 +60,7 @@ export default function ListMovies(props) {
             </SwiperSlide>
             <SwiperSlide>
                 <div className="row">
-                    {renderListFilm2()}
+                    {renderListFilm(8,16)}
                     <NavLink to="/phim-dang-chieu" className="listMovies__showMore">
                       Xem Thêm <i className="fa fa-angle-double-right"></i>
                     </NavLink>
@@ -84,7 +68,7 @@ export default function ListMovies(props) {
             </SwiperSlide>
             <SwiperSlide>
                 <div className="row">
-                    {renderListFilm3()}
+                    {renderListFilm(16,24)}
                     <NavLink to="/phim-dang-chieu" className="listMovies__showMore">
                       Xem Thêm <i className="fa fa-angle-double-right"></i>
                     </NavLink>

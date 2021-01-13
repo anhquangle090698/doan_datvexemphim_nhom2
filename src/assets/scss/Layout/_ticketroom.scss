@@ -1,0 +1,90 @@
+.ticketRoom {
+
+    position: relative;
+    width: 100%;
+
+    .ticket__chooseChair {
+
+        width: 70%;
+        margin: 0 auto;
+
+        padding: 70px 0;
+
+        .ticket__information {
+            display: flex;
+            justify-content: space-between;
+            
+            width: 80%;
+
+            .ticket__information--left {
+                h3 {
+                    @include styleText($color-green-0, $fs-20, $fw-400);
+                }
+
+                p {
+                    @include styleText($color-black-1, $fs-12 + 2, $fw-400);
+
+                    font-style: italic;
+                }
+            }
+            .ticket__information--right {
+                h3 {
+                    @include styleText($color-orange-1, $fs-30, $fw-700);
+                }
+
+                p {
+                    @include styleText($color-black-1, $fs-12, $fw-400);
+                }
+            }
+        }
+
+        .ticket__diagram--listChair {
+
+            .ticket__diagram--chair {
+                position: relative;
+        
+                margin: 0 $mg-5 + 2;
+        
+                cursor: pointer;
+        
+                svg {
+                    width: 35px;
+                    height: 35px;
+                }
+                
+                .number__chair {
+                    position: absolute;
+                    top: -30%;
+                    left: 35%;
+        
+                    @include styleText($color-black-1, $fs-10, $fw-400);
+                }
+
+                .number__chairVip {
+                    color: $color-orange-2;
+                }
+            }
+
+            .chairVip {
+                fill: $color-orange-2;
+            }
+        
+            .ticket__diagram--character {
+                @include styleText($color-black-1, $fs-16, $fw-400);
+                
+                display: inline-block;
+                margin-right: $mg-20;
+                width: 10px;
+            }
+    
+            .ticket__diagram--line {
+                width: 100%;
+                height: 20px;
+            }
+        }
+    }
+
+
+
+    
+}

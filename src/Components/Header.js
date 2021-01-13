@@ -7,7 +7,7 @@ import { postSignInAction } from "../redux/actions/ManageUserReducerAction";
 import { ACCESS_TOKEN, USER_LOGIN } from "../Util/config";
 
 export default function Header(props) {
-  const { informationUserSignIn } = useSelector(
+  const { informationAccount, informationUserSignIn } = useSelector(
     (state) => state.StateManageUser
   );
 
@@ -110,7 +110,7 @@ export default function Header(props) {
                 {informationUserSignIn.taiKhoan ? (
                   <div className="nav__user--dropdown">
                     <span className="nav__user--name">
-                      Chào, {informationUserSignIn.hoTen}
+                      Chào, {informationAccount.hoTen}
                     </span>
                     <div className="dropdown-content">
                       <NavLink

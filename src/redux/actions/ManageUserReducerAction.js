@@ -32,7 +32,7 @@ export const postSignInApiAction = async (informationSignIn) => {
       });
 
       //send data dispatch action reducer
-      dispatch(postSignInAction(result.data));
+      dispatch(await postSignInAction(result.data));
 
       //save data to local storage
       localStorage.setItem(USER_LOGIN, JSON.stringify(result.data));
@@ -40,15 +40,19 @@ export const postSignInApiAction = async (informationSignIn) => {
       //save token to local storage
       localStorage.setItem(ACCESS_TOKEN, result.data.accessToken);
 
+      dispatch(await postInformationAccountApiAction({
+                taiKhoan: result.data.taiKhoan,
+      }));
+
       Swal.fire({
         icon: "success",
         title: "Đăng nhập thành công",
         text: "Chào mừng đến với G2 Cinema!",
       });
 
-      setTimeout(() => {
-        history.goBack();
-      }, 2000);
+      setTimeout(() => {history.goBack()},1000);
+      
+
     } catch (error) {
       // console.log(error.response.data);
 
@@ -56,7 +60,6 @@ export const postSignInApiAction = async (informationSignIn) => {
         icon: "error",
         title: "Tài khoản hoặc mật khẩu không đúng",
         text: "Vui lòng kiểm tra lại!",
-       
       });
     }
   };
@@ -65,42 +68,33 @@ export const postSignInApiAction = async (informationSignIn) => {
 //action gọi api chỉnh sửa thông tin người dùng
 export const putUpdateUserApiAction = async (editInformationUser) => {
   return async (dispatch) => {
-
       try {
         
         let result = await Axios({
           url : 'https://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung',
           method : 'PUT',
           data : editInformationUser,
-          headers : 'Bearer ' + ACCESS_TOKEN,
+          headers : {
+            'Authorization' : 'Bearer ' + localStorage.getItem(ACCESS_TOKEN),
+          }
         });
 
-        console.log(result.data);
+        dispatch(await postInformationAccountApiAction({
+          taiKhoan: result.data.taiKhoan,
+        }));
 
+        Swal.fire({
+          icon: "success",
+          title: "Cập nhật thông tin thành công",
+        });
+        
         history.push("/");
+        
+        history.push("/thong-tin-ca-nhan");
 
       } catch (error) {
-          console.log(error.response);
+          console.log(error);
       }
-  }
-}
-
-export const putUpdateUserApiAction1 = async (editInformationUser) => {
-  return async (dispatch) => {
-    try {
-
-      let result = await Axios({
-        url : 'https://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung',
-        method : 'PUT',
-        data : editInformationUser,
-        headers : 'Bearer ' + ACCESS_TOKEN,
-      });
-
-      console.log(result.data);
-
-    } catch (error) {
-      console.log(error.response);
-    }
   }
 }
 
@@ -116,7 +110,7 @@ export const postInformationAccountApiAction = async (accountName) => {
           data : accountName,
         });
 
-        dispatch(postInformationAccountAction(result.data));
+        dispatch(await postInformationAccountAction(result.data));
 
       } catch (error) {
         console.log(error.response);

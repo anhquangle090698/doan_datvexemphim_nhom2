@@ -33,7 +33,8 @@ export default function InputFieldCustomEdit(props) {
             {placeholder === 'Tài khoản' ? <i className="fa fa-user label--icon"></i> 
             : placeholder === 'Họ tên' ? <i className="fa fa-address-card label--icon"></i>
             : placeholder === 'Email' ?  <i className="fa fa-envelope label--icon"></i>
-            : placeholder === 'Số điện thoại' ? <i className="fa fa-mobile label--icon"></i> : ''
+            : placeholder === 'Số điện thoại' ? <i className="fa fa-mobile label--icon"></i>
+            : placeholder === 'Mật khẩu hiện tại' || placeholder === 'Mật khẩu mới' || placeholder === 'Xác nhận mật khẩu' ? <i className="fa fa-lock label--icon"></i> : ''
             }
              
             {placeholder}
@@ -53,6 +54,10 @@ export default function InputFieldCustomEdit(props) {
 
       >
       </input>
+
+      {type === 'password' ? <i className="fa fa-eye" onClick={ () => {
+                togglePasswordVisibility();
+      }}></i> : null}
 
       {showError && <i className="fa fa-info"></i>}
 
