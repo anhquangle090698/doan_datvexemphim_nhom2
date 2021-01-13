@@ -114,7 +114,6 @@ export default function QuanLyPhim() {
           <button className="btn-action btn-radius">
             Thông tin lịch chiếu
           </button>
-
           <Popconfirm title="Are you sure？" icon={<DeleteOutlined />} onConfirm={handleOk}>
             <button className="btn-action-1">
               <span>
@@ -122,7 +121,6 @@ export default function QuanLyPhim() {
               </span>
             </button>
           </Popconfirm>
-
           <button className="btn-action-1">
             <span>
               <EditOutlined />

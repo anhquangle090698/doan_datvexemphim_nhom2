@@ -59,11 +59,11 @@ export default function ThemPhimMoi() {
           rate: 4.5,
         }}
       >
-        <Form.Item label="Mã Phim">
+        {/* <Form.Item label="Mã Phim">
           <Form.Item name="maPhim" noStyle>
             <InputNumber disabled min={1000} max={9999} />
           </Form.Item>
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
           label="Tên Phim"
