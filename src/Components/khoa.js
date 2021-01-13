@@ -1,9 +1,12 @@
 import React from 'react'
 
 export default function khoa() {
+    const func = ()=>{
+        console.log('hello');
+    }
     return (
         <div>
-            aaaaddddaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccccccccccccccccccccccccccccccc
+            <button onClick={()=>{func}}></button>
         </div>
     )
 }
