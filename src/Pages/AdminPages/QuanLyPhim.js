@@ -1,32 +1,81 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Table, Space, Input, Popconfirm } from "antd";
-import {
-  DeleteOutlined,
-  EditOutlined
-} from "@ant-design/icons";
+import { Table, Space, Input, Popconfirm, Modal } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import "../../assets/css/QuanLyTemplate.css";
 import {
   layDanhSachPhimApiAction,
+  MaPhimChinhSuaAction,
   xoaPhimApiAction,
-} from "../../redux/actions/QuanLyPhimActions";
+} from "../../redux/actions/QuanLyPhimAction";
+import ThongTinLichChieu from "../../Components/ThongTinLichChieu";
+import ChinhSuaPhim from "../../Components/ChinhSuaPhim";
 
 export default function QuanLyPhim() {
+  const dispatch = useDispatch();
+
+  let [stateMaPhim, setStateMaPhim] = useState(0);
 
   const DanhSachPhimReducer = useSelector(
     (state) => state.QuanLyPhimReducer.danhSachPhim
   );
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(layDanhSachPhimApiAction());
   }, []);
 
-  const handleOk = ()=>{
-    console.log('onConfirm');
+  //MODAL EDIT PHIM
+  const [visiblePhim, setVisiblePhim] = useState(false);
+  const [confirmLoadingPhim, setConfirmLoadingPhim] = useState(false);
+
+  const showModalEditPhim = () => {
+    setVisiblePhim(true);
   };
 
+  const handleOkEditPhim = () => {
+    setConfirmLoadingPhim(true);
+    setTimeout(() => {
+      setVisiblePhim(false);
+      setConfirmLoadingPhim(false);
+    }, 1000);
+  };
+
+  const handleCancelPhim = () => {
+    setVisiblePhim(false);
+  };
+
+  //MODAL EDIT INFOMATION PHIM
+  const [visibleInfor, setVisibleInfor] = useState(false);
+  const [confirmLoadingInfor, setConfirmLoadingInfor] = useState(false);
+
+  const showModalInforPhim = () => {
+    setVisibleInfor(true);
+  };
+
+  const handleOkEditInfor = () => {
+    setConfirmLoadingInfor(true);
+    setTimeout(() => {
+      setVisibleInfor(false);
+      setConfirmLoadingInfor(false);
+    }, 2000);
+  };
+
+  const handleCancelInfor = () => {
+    setVisibleInfor(false);
+  };
+
+  //dispatch maPhim lên Reducer
+  const handleChinhSuaPhim = () => {
+    dispatch(MaPhimChinhSuaAction(stateMaPhim))
+    showModalEditPhim();
+  };
+
+  //BUTTON DELETE
+  const handleOkDelete = async () => {
+    dispatch(await xoaPhimApiAction(stateMaPhim));
+  };
+
+  //INPUT SEARCH
   const { Search } = Input;
   const onSearch = (value) => console.log(value);
 
@@ -67,14 +116,14 @@ export default function QuanLyPhim() {
     },
     {
       title: "Ngày Khởi Chiếu",
-      width: 110,
+      width: 120,
       dataIndex: "ngayKhoiChieu",
       key: "ngayKhoiChieu",
       fixed: "left",
     },
     {
       title: "Bí Danh",
-      width: 80,
+      width: 100,
       dataIndex: "biDanh",
       key: "biDanh",
       fixed: "left",
@@ -111,21 +160,36 @@ export default function QuanLyPhim() {
       width: 195,
       render: () => (
         <Space size="middle">
-          <button className="btn-action btn-radius">
+          <button
+            className="btn-action btn-radius"
+            onClick={showModalInforPhim}
+          >
             Thông tin lịch chiếu
           </button>
-          <Popconfirm title="Are you sure？" icon={<DeleteOutlined />} onConfirm={handleOk}>
+
+          <Popconfirm
+            title={`XÓA MÃ PHIM ${stateMaPhim}?`}
+            icon={<DeleteOutlined />}
+            onConfirm={handleOkDelete}
+          >
             <button className="btn-action-1">
               <span>
                 <DeleteOutlined />
               </span>
             </button>
           </Popconfirm>
-          <button className="btn-action-1">
-            <span>
-              <EditOutlined />
-            </span>
-          </button>
+
+          <Popconfirm
+            title={`SỬA MÃ PHIM ${stateMaPhim}?`}
+            icon={<EditOutlined />}
+            onConfirm={handleChinhSuaPhim}
+          >
+            <button className="btn-action-1">
+              <span>
+                <EditOutlined />
+              </span>
+            </button>
+          </Popconfirm>
         </Space>
       ),
     },
@@ -148,16 +212,37 @@ export default function QuanLyPhim() {
           columns={title}
           dataSource={DanhSachPhimReducer}
           scroll={{ x: 1300 }}
-          onRow={(phim, index) => {
+          pagination={{ pageSize: 3 }}
+          onRow={(phim) => {
             return {
               onClick: (e) => {
-                console.log(phim.maPhim);
+                setStateMaPhim(phim.maPhim);
               },
             };
           }}
           rowKey={(e) => e.maPhim}
         />
       </div>
+
+      <Modal
+        visible={visibleInfor}
+        onOk={handleOkEditInfor}
+        confirmLoading={confirmLoadingInfor}
+        onCancel={handleCancelInfor}
+        width={800}
+      >
+        <ThongTinLichChieu />
+      </Modal>
+
+      <Modal
+        visible={visiblePhim}
+        onOk={handleOkEditPhim}
+        confirmLoading={confirmLoadingPhim}
+        onCancel={handleCancelPhim}
+        width={800}
+      >
+        <ChinhSuaPhim handleOkEditPhim={handleOkEditPhim}/>
+      </Modal>
     </>
   );
 }

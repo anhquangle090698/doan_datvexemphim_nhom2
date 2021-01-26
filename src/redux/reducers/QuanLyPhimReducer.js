@@ -1,17 +1,17 @@
 import {
   LAY_DANH_SACH_PHIM_ACTION,
-  LAY_DANH_SACH_NGUOI_DUNG_ACTION,
+  MA_PHIM_CHINH_SUA_ACTION,
   THEM_PHIM_MOI_ACTION,
-  XOA_PHIM_ACTION
-} from "../const/CinemaConst";
+} from "../const/AdminCinemaConst";
 
 const stateDefault = {
   danhSachPhim: [],
-  // chiTietPhim: [],
-  danhSachNguoiDung: [],
-  phimMoi: {},
-  MaPhim:{}
+  MaPhimChinhSua: {},
 };
+
+
+
+
 
 export const QuanLyPhimReducer = (state = stateDefault, action) => {
   switch (action.type) {
@@ -20,17 +20,19 @@ export const QuanLyPhimReducer = (state = stateDefault, action) => {
       return { ...state };
     }
 
-    case LAY_DANH_SACH_NGUOI_DUNG_ACTION: {
-      state.danhSachNguoiDung = action.dsNguoiDung;
+    case THEM_PHIM_MOI_ACTION: {
+      let danhSachPhimUpdate = [...state.danhSachPhim];
+      danhSachPhimUpdate.push(action.phim);
+      state.danhSachPhim = danhSachPhimUpdate;
       return { ...state };
     }
 
-    case THEM_PHIM_MOI_ACTION: {
-      state.phimMoi = action.phim;
-      return {...state};
-    }
+    case MA_PHIM_CHINH_SUA_ACTION: {
 
-    
+      state.MaPhimChinhSua = action.maPhim;
+
+      return { ...state };
+    }
 
     default:
       return { ...state };

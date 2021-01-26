@@ -1,14 +1,18 @@
-import React, { useEffect } from "react";
-import { Table, Space, Input } from "antd";
+import React, { useEffect, useState } from "react";
+import { Table, Space, Input, Popconfirm, Modal } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import "../../assets/css/QuanLyTemplate.css";
 import { useDispatch, useSelector } from "react-redux";
-import { layDanhSachNguoiDungApiAction } from "../../redux/actions/QuanLyNguoiDungActions";
+import { layDanhSachNguoiDungApiAction, taiKhoan, xoaNguoiDungApiAction } from "../../redux/actions/QuanLyNguoiDungAction";
+import ChinhSuaNguoiDung from "../../Components/ChinhSuaNguoiDung";
 
 export default function QuanLyNguoiDung() {
+
   const DanhSachNguoiDung = useSelector(
-    (state) => state.QuanLyPhimReducer.danhSachNguoiDung
+    (state) => state.QuanLyNguoiDungReducer.danhSachNguoiDung
   );
+
+  let [stateTaiKhoan, setStateTaiKhoan] = useState('');
 
   const dispatch = useDispatch();
 
@@ -16,6 +20,38 @@ export default function QuanLyNguoiDung() {
     dispatch(layDanhSachNguoiDungApiAction());
   }, []);
 
+  //MODAL EDIT
+  const [visibleEditNguoiDung, setVisibleEditNguoiDung] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  
+  const showEditNguoiDungModal = () => {
+    setVisibleEditNguoiDung(true);
+  };
+
+  const handleOkEditNguoiDung = () => {
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisibleEditNguoiDung(false);
+      setConfirmLoading(false);
+    }, 1000);
+  };
+
+  const handleCancel = () => {
+    setVisibleEditNguoiDung(false);
+  };
+
+  //dispatch taiKhoan lên Reducer
+  const handleChinhSuaPhim = () => {
+    dispatch(taiKhoan(stateTaiKhoan))
+    showEditNguoiDungModal();
+  };
+
+  //BUTTON DELETE
+  const handleOkDelete = async () => {
+    dispatch(await xoaNguoiDungApiAction(stateTaiKhoan));
+  };
+
+  //INPUT SEARCH
   const { Search } = Input;
   const onSearch = (value) => console.log(value);
 
@@ -23,7 +59,7 @@ export default function QuanLyNguoiDung() {
   const title = [
     {
       title: "Tài Khoản",
-      width: 60,
+      width: 100,
       dataIndex: "taiKhoan",
       key: "taiKhoan",
       fixed: "left",
@@ -58,7 +94,7 @@ export default function QuanLyNguoiDung() {
     },
     {
       title: "Loại Người Dùng",
-      width: 100,
+      width: 60,
       dataIndex: "maLoaiNguoiDung",
       key: "maLoaiNguoiDung",
       fixed: "left",
@@ -67,22 +103,31 @@ export default function QuanLyNguoiDung() {
       title: "Phương Thức",
       key: "PhuongThuc",
       fixed: "right",
-      width: 160,
+      width: 75,
       render: () => (
-        <Space size="middle">
-          <button className="btn-action btn-radius">
-            Thông tin Người Dùng
-          </button>
-          <button className="btn-action-1">
-            <span>
-              <DeleteOutlined />
-            </span>
-          </button>
-          <button className="btn-action-1">
+        <Space align="center" size="large">
+          <Popconfirm
+            title={`XÓA TÀI KHOẢN ${stateTaiKhoan}?`}
+            icon={<DeleteOutlined />}
+            onConfirm={handleOkDelete}
+          >
+            <button className="btn-action-1">
+              <span>
+                <DeleteOutlined />
+              </span>
+            </button>
+          </Popconfirm>
+          <Popconfirm
+            title={`SỬA TÀI KHOẢN ${stateTaiKhoan}?`}
+            icon={<EditOutlined />}
+            onConfirm={handleChinhSuaPhim}
+          >
+            <button className="btn-action-1">
             <span>
               <EditOutlined />
             </span>
           </button>
+          </Popconfirm>
         </Space>
       ),
     },
@@ -96,17 +141,35 @@ export default function QuanLyNguoiDung() {
           placeholder="Tìm Kiếm"
           onSearch={onSearch}
           enterButton
-          ghost="false"
+          ghost= {false}
         />
       </div>
       <div className="container-table">
         <Table
           bordered
           columns={title}
+          pagination={{ pageSize: 7 }}
           dataSource={DanhSachNguoiDung}
           scroll={{ x: 1300 }}
+          onRow={(user) => {
+            return {
+              onClick: (e) => {
+                setStateTaiKhoan(user.taiKhoan);
+              },
+            };
+          }}
+          rowKey={(e) => e.taiKhoan}
         />
       </div>
+      <Modal
+        visible={visibleEditNguoiDung}
+        onOk={handleOkEditNguoiDung}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+        width={800}
+      >
+        <ChinhSuaNguoiDung handleOkEditNguoiDung={handleOkEditNguoiDung}/>
+      </Modal>
     </>
   );
 }

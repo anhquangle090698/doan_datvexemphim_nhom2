@@ -27,7 +27,7 @@
 .btn-action{
     border: 1px solid orange;
     color: orange;
-    background-color: white;
+    background-color: transparent;
     transition: all .3s;
     padding: 8px;
     outline: none !important;
@@ -37,7 +37,7 @@
     width: 45px;
     height: 45px;
     color: orange;
-    background-color: white;
+    background-color: transparent;
     transition: all .3s;
     padding: 8px;
     outline: none !important;
@@ -115,9 +115,51 @@
 
 
 .ant-btn > .anticon{
-    color: white !important;
+    color: white ;
 }
 
 .ant-radio-inner::after{
     background-color: orange;
+}
+
+.container-login{
+    text-align: center;
+    background-color: orange;
+    width: 100%;
+    height: 100vh;
+}
+
+.container-content-login{
+    padding: 180px;
+}
+
+.background-content-login{
+    background-color: white;
+    border-radius: 50px;
+    height: 500px;
+    width: 700px;
+    margin: auto;
+    -webkit-box-shadow: 2px 6px 18px 12px rgba(224, 130, 7, 0.91); 
+    box-shadow: 2px 6px 18px 12px rgba(224, 130, 7,0.91);
+}
+
+.logo-login{
+    text-align: center;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-top: 40px;
+}
+
+.title-login{
+    text-align: center;
+    color: orange;
+}
+
+.ant-popover-message-title{
+    color: red;
+}
+
+.ant-modal-footer{
+    display: none;
 }

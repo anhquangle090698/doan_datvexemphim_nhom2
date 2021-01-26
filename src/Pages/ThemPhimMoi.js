@@ -1,20 +1,22 @@
-import React, { useState } from "react";
-
-import {
-  Form,
-  InputNumber,
-  Button,
-  Upload,
-  Rate,
-  Input,
-  DatePicker
-} from "antd";
-import { UploadOutlined} from "@ant-design/icons";
+import React from "react";
+import { Form, Button, Upload, Rate, Input, DatePicker } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import "../assets/css/AdminTemplate.css";
-import { themPhimMoiApiAction } from "../redux/actions/QuanLyPhimActions";
+import { themPhimMoiApiAction } from "../redux/actions/QuanLyPhimAction";
 import { useDispatch } from "react-redux";
+import moment from "moment";
 
 export default function ThemPhimMoi() {
+  const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
+
+  const onReset = () => {
+    setTimeout(() => {
+      form.resetFields();
+    }, 2000);
+  };
+
   const formItemLayout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
@@ -28,48 +30,49 @@ export default function ThemPhimMoi() {
     return e && e.fileList;
   };
 
-  const dispatch = useDispatch();
-
-
   return (
     <>
       <h1 className="title-manage">Thêm Phim</h1>
       <Form
+        form={form}
         name="validate_other"
         {...formItemLayout}
         onFinish={(values) => {
+          let formatNgayKhoiChieu = moment(values.ngayKhoiChieu).format(
+            "DD/MM/yyyy"
+          );
 
-          const phim = {  
-              hinhAnh : values.hinhAnh[0].originFileObj,
-              maPhim: values.maPhim,
-              tenPhim: values.tenPhim,
-              trailer: values.trailer,
-              moTa: values.moTa,
-              maNhom: 'GP02'
+          let formatDanhGia = values.danhGia * 2;
+
+          const phim = {
+            hinhAnh: values.hinhAnh[0].originFileObj,
+            maPhim: undefined,
+            biDanh: values.biDanh,
+            tenPhim: values.tenPhim,
+            trailer: values.trailer,
+            moTa: values.moTa,
+            maNhom: "GP02",
+            danhGia: formatDanhGia,
+            ngayKhoiChieu: formatNgayKhoiChieu,
           };
-          
-           let form_data = new FormData();
-            for (let key in phim){
-              form_data.append(key, phim[key]);
-            }
-            dispatch(themPhimMoiApiAction(form_data));
+
+          let form_data = new FormData();
+          for (let key in phim) {
+            form_data.append(key, phim[key]);
+          }
+          dispatch(themPhimMoiApiAction(form_data));
+
+          onReset();
         }}
         initialValues={{
           ["maNhom"]: "GP02",
-          rate: 4.5,
         }}
       >
-        {/* <Form.Item label="Mã Phim">
-          <Form.Item name="maPhim" noStyle>
-            <InputNumber disabled min={1000} max={9999} />
-          </Form.Item>
-        </Form.Item> */}
-
         <Form.Item
           label="Tên Phim"
           name="tenPhim"
           validateStatus="success"
-          rules={[{ required: true, message: 'Vui lòng nhập Tên Phim!' }]}
+          rules={[{ required: true, message: "Vui lòng nhập Tên Phim!" }]}
         >
           <Input placeholder="Tên Phim" id="success" />
         </Form.Item>
@@ -78,7 +81,7 @@ export default function ThemPhimMoi() {
           label="Bí Danh"
           name="biDanh"
           validateStatus="success"
-          rules={[{ required: true, message: 'Vui lòng nhập Bí Danh!' }]}
+          rules={[{ required: true, message: "Vui lòng nhập Bí Danh!" }]}
         >
           <Input placeholder="Bí Danh" id="success" />
         </Form.Item>
@@ -87,9 +90,9 @@ export default function ThemPhimMoi() {
           label="Trailer"
           name="trailer"
           validateStatus="success"
-          rules={[{ required: true, message: 'Vui lòng nhập Trailer!' }]}
+          rules={[{ required: true, message: "Vui lòng nhập Trailer!" }]}
         >
-          <Input placeholder="Trailer" id="success" />
+          <Input placeholder="Trailer" id="success" type="url" />
         </Form.Item>
 
         <Form.Item
@@ -97,9 +100,9 @@ export default function ThemPhimMoi() {
           label="Hình Ảnh"
           valuePropName="file"
           getValueFromEvent={normFile}
-          rules={[{ required: true, message: 'Vui lòng thêm Hình Ảnh!' }]}
+          rules={[{ required: true, message: "Vui lòng thêm Hình Ảnh!" }]}
         >
-          <Upload name="hinhAnh" listType="picture">
+          <Upload name="hinhAnh" listType="picture" beforeUpload={() => false}>
             <Button icon={<UploadOutlined />}>Click to upload</Button>
           </Upload>
         </Form.Item>
@@ -117,9 +120,9 @@ export default function ThemPhimMoi() {
           label="Ngày khởi chiếu"
           name="ngayKhoiChieu"
           validateStatus="success"
-          rules={[{ required: true, message: 'Vui chọn Ngày Khởi Chiếu!' }]}
+          rules={[{ required: true, message: "Vui chọn Ngày Khởi Chiếu!" }]}
         >
-          <DatePicker showTime placeholder="Ngày khởi chiếu" format="YYYY-MM-DD HH:mm:ss" />
+          <DatePicker placeholder="Ngày khởi chiếu" format={"DD/MM/yyyy"} />
         </Form.Item>
 
         <Form.Item name="danhGia" label="Đánh giá">
@@ -131,9 +134,7 @@ export default function ThemPhimMoi() {
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-          <Button htmlType="submit">
-            Thêm Phim
-          </Button>
+          <Button htmlType="submit">Thêm Phim</Button>
         </Form.Item>
       </Form>
     </>
