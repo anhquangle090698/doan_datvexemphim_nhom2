@@ -71,7 +71,7 @@ export default function ThemNguoiDungMoi() {
             },
           ]}
         >
-          <Input placeholder="Tài Khoản" id="success" />
+          <Input placeholder="Tài Khoản" />
         </Form.Item>
 
         <Form.Item
@@ -134,13 +134,12 @@ export default function ThemNguoiDungMoi() {
 
           ]}
         >
-          <Input placeholder="Họ Và Tên" id="success" />
+          <Input placeholder="Họ Và Tên" />
         </Form.Item>
 
         <Form.Item
           label="Email"
           name="email"
-          validateStatus="success"
           rules={[
             {
               type: "email",
@@ -149,7 +148,7 @@ export default function ThemNguoiDungMoi() {
             { required: true, message: "Vui lòng nhập Email!" },
           ]}
         >
-          <Input placeholder="Email" id="success" />
+          <Input placeholder="Email"  />
         </Form.Item>
 
         <Form.Item
@@ -161,16 +160,15 @@ export default function ThemNguoiDungMoi() {
           message:"Vui lòng nhập đúng định dạng Số Điện Thoại"
         }]}
         >
-          <Input placeholder="Số Điện Thoại" id="success" />
+          <Input placeholder="Số Điện Thoại" />
         </Form.Item>
 
         <Form.Item
           label="Mã nhóm"
           name="maNhom"
-          validateStatus="success"
           rules={[{ required: true }]}
         >
-          <Input id="success" disabled />
+          <Input disabled />
         </Form.Item>
 
         <Form.Item

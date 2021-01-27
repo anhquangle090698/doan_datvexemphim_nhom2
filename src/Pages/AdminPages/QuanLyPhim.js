@@ -7,14 +7,18 @@ import {
   layDanhSachPhimApiAction,
   MaPhimChinhSuaAction,
   xoaPhimApiAction,
+  layThongTinHeThongCumRapActionApi,
+  layThongTinHeThongRapActionApi
 } from "../../redux/actions/QuanLyPhimAction";
 import ThongTinLichChieu from "../../Components/ThongTinLichChieu";
 import ChinhSuaPhim from "../../Components/ChinhSuaPhim";
 
 export default function QuanLyPhim() {
+
+  console.log('hello');
   const dispatch = useDispatch();
 
-  let [stateMaPhim, setStateMaPhim] = useState(0);
+  let [stateMaPhim, setStateMaPhim] = useState();
 
   const DanhSachPhimReducer = useSelector(
     (state) => state.QuanLyPhimReducer.danhSachPhim
@@ -22,8 +26,12 @@ export default function QuanLyPhim() {
 
   useEffect(() => {
     dispatch(layDanhSachPhimApiAction());
-  }, []);
+    dispatch(layThongTinHeThongCumRapActionApi('BHDStar'));
+    dispatch(layThongTinHeThongRapActionApi());
+  },[]);
 
+
+  
   //MODAL EDIT PHIM
   const [visiblePhim, setVisiblePhim] = useState(false);
   const [confirmLoadingPhim, setConfirmLoadingPhim] = useState(false);
@@ -44,6 +52,12 @@ export default function QuanLyPhim() {
     setVisiblePhim(false);
   };
 
+  //dispatch maPhim lên Reducer
+  const handleChinhSuaPhim = () => {
+    dispatch(MaPhimChinhSuaAction(stateMaPhim));
+    showModalEditPhim();
+  };
+
   //MODAL EDIT INFOMATION PHIM
   const [visibleInfor, setVisibleInfor] = useState(false);
   const [confirmLoadingInfor, setConfirmLoadingInfor] = useState(false);
@@ -54,6 +68,7 @@ export default function QuanLyPhim() {
 
   const handleOkEditInfor = () => {
     setConfirmLoadingInfor(true);
+    
     setTimeout(() => {
       setVisibleInfor(false);
       setConfirmLoadingInfor(false);
@@ -64,10 +79,9 @@ export default function QuanLyPhim() {
     setVisibleInfor(false);
   };
 
-  //dispatch maPhim lên Reducer
-  const handleChinhSuaPhim = () => {
-    dispatch(MaPhimChinhSuaAction(stateMaPhim))
-    showModalEditPhim();
+  const handleAddPhim = () => {
+    dispatch(MaPhimChinhSuaAction(stateMaPhim));
+    showModalInforPhim();
   };
 
   //BUTTON DELETE
@@ -160,12 +174,17 @@ export default function QuanLyPhim() {
       width: 195,
       render: () => (
         <Space size="middle">
-          <button
-            className="btn-action btn-radius"
-            onClick={showModalInforPhim}
+          <Popconfirm
+            title={`THÊM LỊCH CHIẾU MÃ PHIM: ${stateMaPhim}?`}
+            icon={<EditOutlined />}
+            onConfirm={handleAddPhim}
           >
-            Thông tin lịch chiếu
-          </button>
+            <button
+              className="btn-action btn-radius"
+            >
+              Thông tin lịch chiếu
+            </button>
+          </Popconfirm>
 
           <Popconfirm
             title={`XÓA MÃ PHIM ${stateMaPhim}?`}
@@ -194,7 +213,7 @@ export default function QuanLyPhim() {
       ),
     },
   ];
-
+  
   return (
     <>
       <h1 className="title-manage">Quản Lý Phim</h1>
@@ -241,7 +260,7 @@ export default function QuanLyPhim() {
         onCancel={handleCancelPhim}
         width={800}
       >
-        <ChinhSuaPhim handleOkEditPhim={handleOkEditPhim}/>
+        <ChinhSuaPhim handleOkEditPhim={handleOkEditPhim} />
       </Modal>
     </>
   );

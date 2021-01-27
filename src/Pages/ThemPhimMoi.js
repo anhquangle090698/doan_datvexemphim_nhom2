@@ -71,28 +71,25 @@ export default function ThemPhimMoi() {
         <Form.Item
           label="Tên Phim"
           name="tenPhim"
-          validateStatus="success"
           rules={[{ required: true, message: "Vui lòng nhập Tên Phim!" }]}
         >
-          <Input placeholder="Tên Phim" id="success" />
+          <Input placeholder="Tên Phim" />
         </Form.Item>
 
         <Form.Item
           label="Bí Danh"
           name="biDanh"
-          validateStatus="success"
           rules={[{ required: true, message: "Vui lòng nhập Bí Danh!" }]}
         >
-          <Input placeholder="Bí Danh" id="success" />
+          <Input placeholder="Bí Danh"/>
         </Form.Item>
 
         <Form.Item
           label="Trailer"
           name="trailer"
-          validateStatus="success"
           rules={[{ required: true, message: "Vui lòng nhập Trailer!" }]}
         >
-          <Input placeholder="Trailer" id="success" type="url" />
+          <Input placeholder="Trailer" type="url" />
         </Form.Item>
 
         <Form.Item
@@ -102,7 +99,7 @@ export default function ThemPhimMoi() {
           getValueFromEvent={normFile}
           rules={[{ required: true, message: "Vui lòng thêm Hình Ảnh!" }]}
         >
-          <Upload name="hinhAnh" listType="picture" beforeUpload={() => false}>
+          <Upload name="hinhAnh" listType="picture" >
             <Button icon={<UploadOutlined />}>Click to upload</Button>
           </Upload>
         </Form.Item>
@@ -110,16 +107,14 @@ export default function ThemPhimMoi() {
         <Form.Item
           label="Mã nhóm"
           name="maNhom"
-          validateStatus="success"
           rules={[{ required: true }]}
         >
-          <Input id="success" disabled />
+          <Input disabled />
         </Form.Item>
 
         <Form.Item
           label="Ngày khởi chiếu"
           name="ngayKhoiChieu"
-          validateStatus="success"
           rules={[{ required: true, message: "Vui chọn Ngày Khởi Chiếu!" }]}
         >
           <DatePicker placeholder="Ngày khởi chiếu" format={"DD/MM/yyyy"} />

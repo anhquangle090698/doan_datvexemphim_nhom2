@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { ChinhSuaNguoiDungActionApi } from "../redux/actions/QuanLyNguoiDungAction";
 
 export default function ChinhSuaNguoiDung(props) {
+  
   const DanhSachNguoiDungReducer = useSelector(
     (state) => state.QuanLyNguoiDungReducer
   );
-  console.log(DanhSachNguoiDungReducer);
 
   let { taiKhoan } = DanhSachNguoiDungReducer;
 

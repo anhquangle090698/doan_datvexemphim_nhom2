@@ -2,6 +2,8 @@ import axios from "axios";
 import { ACCESS_TOKEN } from "../../Utils/config";
 import {
   LAY_DANH_SACH_PHIM_ACTION,
+  LAY_HE_THONG_CUM_RAP_ACTION,
+  LAY_HE_THONG_RAP_ACTION,
   MA_PHIM_CHINH_SUA_ACTION,
   THEM_PHIM_MOI_ACTION,
 } from "../const/AdminCinemaConst";
@@ -156,3 +158,55 @@ export const ChinhSuaPhimActionApi = async (form_data) => {
     }
   };
 };
+
+export const layThongTinHeThongRapActionApi = () => {
+  return dispatch => {
+    try {
+      let result = axios({
+        url:'https://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinHeThongRap',
+        method:'GET'
+      });
+      result.then((res)=>{
+        dispatch(layThongTinHeThongRapAction(res.data))
+      });
+      result.catch((err)=>{
+        console.log(err.response.data);
+      });
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  }
+}
+
+export const layThongTinHeThongRapAction = (data) =>{
+  return{
+    type:'LAY_HE_THONG_RAP_ACTION',
+    data
+  }
+}
+
+export const layThongTinHeThongCumRapActionApi = (name) => {
+  return (dispatch) => {
+    try {
+      let result = axios({
+        url:`https://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${name}`,
+        method:'GET'
+      });
+      result.then((res)=>{
+        dispatch(layThongTinHeThongCumRapAction(res.data));
+      });
+      result.catch((err)=>{
+        console.log(err.response.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+export const layThongTinHeThongCumRapAction = (data) => {
+  return {
+    type: LAY_HE_THONG_CUM_RAP_ACTION,
+    data
+  }
+}
