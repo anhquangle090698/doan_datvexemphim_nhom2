@@ -131,7 +131,7 @@ export const AdminTemplate = (props) => {
                     </Menu.Item>
                   </SubMenu>
                   <MenuItem key="8" icon={<OrderedListOutlined />}>
-                    <NavLink to="/admin" className="text-orange">
+                    <NavLink to="/admin/quan-ly-lich-chieu" className="text-orange">
                       Quản Lý Lịch Chiếu
                     </NavLink>
                   </MenuItem>

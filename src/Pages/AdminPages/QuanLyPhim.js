@@ -15,7 +15,6 @@ import ChinhSuaPhim from "../../Components/ChinhSuaPhim";
 
 export default function QuanLyPhim() {
 
-  console.log('hello');
   const dispatch = useDispatch();
 
   let [stateMaPhim, setStateMaPhim] = useState();
@@ -182,7 +181,7 @@ export default function QuanLyPhim() {
             <button
               className="btn-action btn-radius"
             >
-              Thông tin lịch chiếu
+              Thêm lịch chiếu
             </button>
           </Popconfirm>
 

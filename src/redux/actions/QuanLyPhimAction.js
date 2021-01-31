@@ -6,6 +6,7 @@ import {
   LAY_HE_THONG_RAP_ACTION,
   MA_PHIM_CHINH_SUA_ACTION,
   THEM_PHIM_MOI_ACTION,
+  THONG_TIN_LICH_CHIEU_ACTION,
 } from "../const/AdminCinemaConst";
 import swal from "sweetalert2";
 import { history } from "../../Utils/history";
@@ -107,6 +108,7 @@ export const xoaPhimApiAction = async (MaPhim) => {
       } else {
         swal.fire({
           title: "Xóa Thất Bại!",
+          html: err.response.data,
           icon: "error",
           confirmButtonColor: "orange",
         });
@@ -207,6 +209,73 @@ export const layThongTinHeThongCumRapActionApi = (name) => {
 export const layThongTinHeThongCumRapAction = (data) => {
   return {
     type: LAY_HE_THONG_CUM_RAP_ACTION,
+    data
+  }
+}
+
+export const themLichChieuActionApi = (phim) => {
+  return dispatch =>{
+    try {
+      let result = axios({
+        url: 'https://movie0706.cybersoft.edu.vn/api/QuanLyDatVe/TaoLichChieu',
+        method: 'POST',
+        data: phim,
+        headers: {
+          Authorization: "Bearer  " + localStorage.getItem(ACCESS_TOKEN),
+        },
+      });
+      result.then((res)=>{
+        console.log(res.data);
+        swal.fire({
+          title: "Thêm Lịch Chiếu Thành Công!",
+          timer: 2500,
+          icon: "success",
+          confirmButtonColor: "orange",
+        });
+      });
+      result.catch((err)=>{
+        console.log(err.response.data);
+        swal.fire({
+          title: "Thêm Lịch Chiếu Thất Bại!",
+          html: err.response.data,
+          icon: "error",
+          confirmButtonColor: "orange",
+        });
+      })
+    } catch (error) {
+      console.log(error);
+      swal.fire({
+        title: "Thêm Lịch Chiếu Thất Bại!",
+        icon: "error",
+        confirmButtonColor: "orange",
+      });
+    }
+  }
+};
+
+export const thongTinLichChieuActionApi = (maPhim) => {
+  return dispatch => {
+    try {
+    let result = axios({
+      url:`https://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${maPhim}`,
+      method:'GET'
+    });   
+    result.then(res => {
+      dispatch(thongTinLichChieuAction(res.data));
+    });
+    result.catch(err => {
+      console.log(err);
+    })
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+const thongTinLichChieuAction = (data) => {
+  return {
+    type: THONG_TIN_LICH_CHIEU_ACTION,
     data
   }
 }

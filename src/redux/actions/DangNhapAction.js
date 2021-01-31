@@ -25,15 +25,47 @@ export const DangNhapAction = (userLogin) => {
         icon: "success",
         confirmButtonColor: "orange",
         didOpen: () => {
+          dispatch(dangNhapApi(res.data));
           swal.showLoading();
           timerInterval = setInterval(() => {}, 100);
         },
         willClose: () => {
-          history.goBack();
+          history.push('/admin');
           clearInterval(timerInterval);
         },
       });
-      dispatch(dangNhapApi(res.data));
+      
+      /* if(res.data.maLoaiNguoiDung === 'QuanTri'){
+        let timerInterval;
+        swal.fire({
+          title: "Đăng Nhập Thành Công!",
+          html: "Chuyển về trang ADMIN sau 3s",
+          timer: 2500,
+          timerProgressBar: true,
+          icon: "success",
+          confirmButtonColor: "orange",
+          didOpen: () => {
+            dispatch(dangNhapApi(res.data));
+            swal.showLoading();
+            timerInterval = setInterval(() => {}, 100);
+          },
+          willClose: () => {
+            history.push('/admin');
+            clearInterval(timerInterval);
+          },
+        });
+      }else{
+        swal.fire({
+          title: "Đăng Nhập Thất Bại!",
+          html: "Bạn Không Đủ Quyền Truy Cập!!!",
+          timer: 2000,
+          icon: "error",
+          confirmButtonColor: "orange",
+          showConfirmButton: true,
+        });
+      } */
+
+
     });
     promise.catch((err) => {
       console.log(err.response.data);

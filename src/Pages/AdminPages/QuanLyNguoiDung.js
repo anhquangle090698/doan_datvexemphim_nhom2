@@ -6,11 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { layDanhSachNguoiDungApiAction, taiKhoan, xoaNguoiDungApiAction } from "../../redux/actions/QuanLyNguoiDungAction";
 import ChinhSuaNguoiDung from "../../Components/ChinhSuaNguoiDung";
 
-console.log('hi');
-
 export default function QuanLyNguoiDung() {
-
-  console.log('hiin');
 
   const DanhSachNguoiDung = useSelector(
     (state) => state.QuanLyNguoiDungReducer.danhSachNguoiDung

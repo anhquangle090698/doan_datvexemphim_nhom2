@@ -17,6 +17,7 @@ export default function ChinhSuaPhim(props) {
   const handleDispatchSuaPhim = async (form_data) => {
     props.handleOkEditPhim();
     dispatch( await ChinhSuaPhimActionApi(form_data));
+    onReset();
   }
 
   const [form] = Form.useForm();
@@ -70,8 +71,6 @@ export default function ChinhSuaPhim(props) {
           }
 
           handleDispatchSuaPhim(form_data);
-
-          onReset();
         }}
         initialValues={{
           ['maNhom']: "GP02",

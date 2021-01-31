@@ -4,6 +4,7 @@ import {
   LAY_HE_THONG_RAP_ACTION,
   MA_PHIM_CHINH_SUA_ACTION,
   THEM_PHIM_MOI_ACTION,
+  THONG_TIN_LICH_CHIEU_ACTION,
 } from "../const/AdminCinemaConst";
 
 const stateDefault = {
@@ -11,7 +12,7 @@ const stateDefault = {
   MaPhimChinhSua: {},
   thongTinCumRap: [],
   thongTinHeThongRap: [],
-  
+  thongTinLichChieu:[]
 };
 
 
@@ -43,14 +44,21 @@ export const QuanLyPhimReducer = (state = stateDefault, action) => {
 
       state.thongTinCumRap = action.data;
 
-      return{...state}
+      return{ ...state }
     }
 
-    case LAY_HE_THONG_RAP_ACTION:{
+    case LAY_HE_THONG_RAP_ACTION: {
 
       state.thongTinHeThongRap = action.data;
 
-      return {...state}
+      return { ...state } 
+    }
+
+    case THONG_TIN_LICH_CHIEU_ACTION: {
+
+      state.thongTinLichChieu = action.data;
+
+      return { ...state }
     }
 
     default:

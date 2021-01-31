@@ -4,24 +4,32 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import {
   layThongTinHeThongCumRapActionApi,
-  layThongTinHeThongRapActionApi,
+  themLichChieuActionApi,
 } from "../redux/actions/QuanLyPhimAction";
 
 export default function ThongTinLichChieu(props) {
   const dispatch = useDispatch();
+
   const [form] = Form.useForm();
 
-  const [stateHeThongRap, setStateHeThongRap] = useState("BHDStar");
-  const [stateCumRap, setStateCumRap] = useState("");
+  const onResetForm = () => {
+    form.resetFields();
+  }
 
-  const changeStateHeThongRap = (value) => {
+  const [stateHeThongRap, setStateHeThongRap] = useState("BHDStar");
+  const [stateCumRap, setStateCumRap] = useState('');
+
+  const changeStateHeThongRap = (value , res) => {
     setStateHeThongRap(value);
     dispatch(layThongTinHeThongCumRapActionApi(value));
   };
 
+  const changeStateCumRap = (value , res) => {
+    setStateCumRap(res.key);
+  };
+
   useEffect(() => {
     dispatch(layThongTinHeThongCumRapActionApi(stateHeThongRap));
-    dispatch(layThongTinHeThongRapActionApi());
   }, [stateHeThongRap]);
 
   const thongTinCumRapReducer = useSelector(
@@ -32,21 +40,21 @@ export default function ThongTinLichChieu(props) {
     (state) => state.QuanLyPhimReducer.thongTinHeThongRap
   );
 
-  console.log("thongTinCumRapReducer", thongTinCumRapReducer);
-  console.log("thongTinRapReducer", thongTinHeThongRapReducer);
-
   const { MaPhimChinhSua } = useSelector((state) => state.QuanLyPhimReducer);
+
+  const dispatchThemLichChieu = (lichChieuPhim) => {
+    dispatch(themLichChieuActionApi(lichChieuPhim));
+    onResetForm();
+  };
 
   let [formatNgayChieuGioChieu, setFormatNgayChieuGioChieu] = useState("");
 
   const { Option } = Select;
 
   function onChangeDate(value, dateString) {
-    let formatNgayGio = moment(dateString).format("DD/MM/YYYY h:mm:ss");
+    let formatNgayGio = moment(dateString).format("DD/MM/YYYY HH:mm:ss");
     setFormatNgayChieuGioChieu(formatNgayGio);
   }
-
-  console.log(formatNgayChieuGioChieu);
 
   const formItemLayout = {
     labelCol: { span: 6 },
@@ -57,11 +65,25 @@ export default function ThongTinLichChieu(props) {
     <>
       <h1 className="title-manage">Thêm Lịch Chiếu Phim</h1>
       <h2 className="title-manage">Mã Phim: '{MaPhimChinhSua}'</h2>
-      <Form {...formItemLayout} >
+      <Form 
+      form={form}
+      {...formItemLayout}
+      onFinish={(values)=>{
+        const lichChieuPhim = {
+          maPhim: MaPhimChinhSua,
+          ngayChieuGioChieu: formatNgayChieuGioChieu,
+          maRap: values.maRap,
+          giaVe: values.giaVe
+        }
+
+        dispatchThemLichChieu(lichChieuPhim);
+      }}
+       >
         <Form.Item
           label="Hệ Thống Rạp"
           name="heThongRap"
           rules={[{ required: true, message: "Vui lòng chọn Hệ Thống Rạp!" }]}
+          initialValue = {stateHeThongRap}
         >
           <Select
             onChange={changeStateHeThongRap}
@@ -79,8 +101,9 @@ export default function ThongTinLichChieu(props) {
           label="Cụm Rạp"
           name="cumRap"
           rules={[{ required: true, message: "Vui lòng chọn Cụm Rạp!" }]}
+          initialValue = {null}
         >
-          <Select style={{ width: 350 }} placeholder="Cụm Rạp">
+          <Select style={{ width: 350 }} placeholder="Cụm Rạp" onChange={changeStateCumRap} value={stateCumRap}>
             {thongTinCumRapReducer?.map((cumRap, index) => {
               return <Option key={index} value={cumRap.maCumRap}>
                 {cumRap.tenCumRap}
@@ -93,10 +116,10 @@ export default function ThongTinLichChieu(props) {
           label="Rạp Chiếu"
           name="maRap"
           rules={[{ required: true, message: "Vui lòng chọn Rạp Chiếu!" }]}
-          preserve={true}
+          initialValue = {null}
         >
-          <Select style={{ width: 200 }} placeholder="Rạp Chiếu" value={stateCumRap}>
-            {thongTinCumRapReducer[0]?.danhSachRap.map((rap, index) => {
+          <Select style={{ width: 200 }} placeholder="Rạp Chiếu" >
+            {thongTinCumRapReducer[stateCumRap]?.danhSachRap.map((rap, index) => {
               return <Option key={index} value={rap.maRap}>
                 {rap.tenRap}
               </Option>
@@ -106,7 +129,6 @@ export default function ThongTinLichChieu(props) {
         <Form.Item
           label="Giá Vé"
           name="giaVe"
-          validateStatus="success"
           rules={[{ required: true, message: "Vui lòng nhập Giá Vé!" }]}
         >
           <Input placeholder="Giá Vé" type="number" />
@@ -114,13 +136,13 @@ export default function ThongTinLichChieu(props) {
         <Form.Item
           label="Ngày Chiếu - Giờ Chiếu"
           name="ngayChieuGioChieu"
-          validateStatus="success"
           rules={[
             { required: true, message: "Vui lòng chọn Ngày Chiếu Giờ Chiếu!" },
           ]}
         >
           <DatePicker
             showTime
+            // format={"DD/MM/YYYY HH:mm:ss"}
             onChange={onChangeDate}
             placeholder="Thời gian chiếu"
           />
